@@ -1,0 +1,177 @@
+<head>
+    <meta charset="utf-8"/>
+    <title>{% {{ os.path.splitext(os.path.basename(args.markdown_file))[0].title() }} %}</title>
+    <link rel=icon type="image/x-icon" href="https://www.python.org/static/favicon.ico">
+    <meta name=author content="{% {{ getuser().title() }} %}"/>
+</head>
+
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <!-- This warning message is shown when web browser dont support the requirements. -->
+    <p>Your browser <b>does not support the features required</b> by impress.js, so you are presented with a simplified (broken) version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chromium</b>, <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+    <hr>
+    <p>Tu navegador <b>no soporta las caracteristicas requeridas</b> por impress.js, se presentara una version simplificada (rota) de esta presentacion.</p>
+    <p>Para una mejor experiencia por favor usa un navegador web actualizado de <b>Chromium</b>, <b>Chrome</b>, <b>Safari</b> o <b>Firefox</b>.</p>
+</div>
+
+<div id=impress data-transition-duration=1000 >
+{%
+
+for index, content in enumerate(presentation_slides):
+    {{ """
+    <!-- Begins presentation slide number: {number} -->
+    <div id={number} class=step data-rel-x="{rx}" data-rel-y="{ry}" data-rotate="{rota}" data-rotate-x="{dx}" data-rotate-y="{dy}" data-x="{x}" data-y="{y}" data-z="{z}" data-scale="{s}">
+    {content}
+    </div>
+    <!-- Ends presentation slide number: {number} -->
+    """.format(
+        number=index, content=content,
+        dx=randint(1, 5), dy=randint(1, 5),
+        rx=randint(1000, 5000), ry=randint(5000, 9000), rota=randint(-720, 720),
+        x=randint(1000, 5000), y=randint(5000, 9000),
+        z=randint(1, 5), s=randint(1, 9)) }}
+
+{{ """
+<div id=overview class=step data-x={x} data-y={y} data-scale={s} style='pointer-events:none' data-rotate={rota} ></div>
+""".format(x=randint(1000, 5000), y=randint(1000, 5000),
+           s=randint(2, 9), rota=randint(-720, 720)) }}
+
+%}
+</div>
+
+<!-- <div class=hint ><p>Use Spacebar or Arrow keys to navigate.</p></div> -->
+<div id="impress-toolbar"></div>
+<div id="impress-help"></div>
+
+
+<style>
+@import url(https://fonts.googleapis.com/css?family=Ubuntu);
+@import url(https://fonts.googleapis.com/css?family=Oxygen);
+
+.fallback-message {
+    font-family: sans-serif;
+    line-height: 1.3;
+    width: 780px;
+    padding: 9px 9px 0;
+    margin: 20px auto;
+    border: 1px solid red;
+    border-radius: 9px;
+    background: orange
+}
+.fallback-message p {margin-bottom: 9px}
+.impress-supported .fallback-message {display: none}
+/* Disable mouse clicks / focus for body */
+.impress-enabled {pointer-events: none}
+.impress-enabled #impress, .impress-enabled #impress-toolbar {pointer-events: auto}
+
+.notes {display: none}
+
+h1, h2, h3 {text-align: center}
+
+p {margin: .7em}
+
+li {margin: .2em}
+
+.code, code {
+    font-family: "Ubuntu mono","Oxygen mono", monospace;
+    background-color: white;
+    text-shadow: none;
+    border-radius: 0
+}
+
+strike {opacity: .7}
+
+/* Presentation */
+body {
+    font-family: Ubuntu, Oxygen, sans-serif;
+    background: #fff;
+    background:
+            linear-gradient( {% {{ get_random_pastelight_color() }} %}, transparent),
+            linear-gradient(90deg, {% {{ get_random_pastelight_color() }} %}, transparent),
+            linear-gradient(-90deg, {% {{ get_random_pastelight_color() }} %}, transparent);
+    background-blend-mode: screen
+}
+
+.step {
+    position: relative;
+    width: 900px;
+    height: 700px;
+    padding: 40px 60px;
+    margin: 20px auto;
+    box-sizing:         border-box;
+    color: {% {{ get_random_pasteldark_color() }} %};
+    text-shadow: 0 1px 2px {% {{ get_random_pasteldark_color() }} %};
+    font-family: Ubuntu, Oxygen, sans-serif;
+    font-size: 30px;
+    line-height: 1.5
+}
+
+/* Make inactive steps a little bit transparent */
+.impress-enabled .step {
+    margin: 0;
+    opacity: .1;
+    -webkit-filter: blur(3px);
+    filter: blur(3px);
+    transition: opacity 1s
+}
+.impress-enabled .step.active {opacity: 1; filter: none}
+
+/* Plugins */
+.impress-enabled div#impress-toolbar {
+    position: fixed;
+    right: 1px;
+    bottom: 1px;
+    opacity: .6;
+}
+.impress-enabled div#impress-toolbar > span {margin-right: 9px}
+body.impress-mouse-timeout div#impress-toolbar {display: none}
+body.impress-mouse-timeout {cursor: none}
+
+/* Help popup */
+.impress-enabled #impress-help {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, .5);
+    color: #eee;
+    font-size: 80%;
+    position: fixed;
+    left: 2em;
+    bottom: 2em;
+    width: 24em;
+    border-radius: 1em;
+    padding: 1em;
+    text-align: center;
+    z-index: 99;
+    font-family: Verdana, Arial, Sans
+}
+.impress-enabled #impress-help td {padding-left: 1em; padding-right: 1em}
+
+{% {{ HtmlFormatter(linenos=True, anchorlinenos=True).get_style_defs() }} %}
+</style>
+
+<!-- User custom CSS -->
+<style>
+{%
+if args.css:
+    with open(args.css, encoding="utf-8") as styles:
+        {{ styles.read().strip() }}
+%}
+</style>
+
+
+<!-- User custom JavaScript -->
+<script>
+{%
+if args.js:
+    with open(args.js, encoding="utf-8") as javascripts:
+        {{ javascripts.read().strip() }}
+%}
+</script>
+
+
+<!-- Call "impress().init()" at the end of document. -->
+<script>{% {{ IMPRESS }} %}</script>
+<script>impress().init()</script>
+
+
+</body>
