@@ -43,23 +43,19 @@ SLIDE_SPLITTER = """
 -----
 
 """
-MARKDOWN_EXAMPLE = """
-# Markdown
+MARKDOWN_EXAMPLE = """# Markdown
 ## for presentations
-
 * **This presentation is 100% Markdown!.**
 
 -----
 
 # How?
-
-* [Angler](https://github.com/juancarlospaco/anglerfish) *(Python powah)*
+* [Angler](https://github.com/juancarlospaco/anglerfish) *(Python powah!)*
 * [Impress.js](http://impress.github.io/impress.js) *(Best frontend framework)*
 
 -----
 
 # Styles
-
 * *italics*, **bold**, ~~scratch~~, [links](http://example.com) and more!
 * 5 Dashes separate slides. Can still use HTML tags.
 * *Convert your GitHub `README.md` to Presentation!.*
@@ -73,14 +69,11 @@ lorem| ipsum  | dolor    | sit
 -----
 
 # Code
-
-Using Pygments for code blocks:
-
+Using [Pygments](http://pygments.org) for code blocks:
 ```javascript
 // This javascript code should be highlighted.
 const test = () => {return console.log("Can I haz colors?")};
 ```
-
 ```python
 # This Python code should be highlighted.
 import antigravity
@@ -93,33 +86,28 @@ import antigravity
 -----
 
 # Thanks!
-# &hearts;
-
-"""
+# &hearts;"""
 
 
 class HighlightRenderer(mistune.Renderer):
 
     """Process a code block of markdown."""
 
-    def block_code(self, code, lang):
+    def block_code(self, cod, lang):
         """Process a code block of markdown."""
         if not lang:
-            return '\n<pre><code>{0}</code></pre>\n'.format(
-                mistune.escape(code))
-        lexer = get_lexer_by_name(lang, stripall=True)
-        formatter = HtmlFormatter(linenos=True, anchorlinenos=True)
-        return highlight(code, lexer, formatter)
+            return '\n<pre><code>{}</code></pre>\n'.format(mistune.escape(cod))
+        formatr = HtmlFormatter(linenos=True, anchorlinenos=True)
+        return highlight(cod, get_lexer_by_name(lang, stripall=True), formatr)
 
-renderer = HighlightRenderer()
-md2html = mistune.Markdown(renderer=renderer)
+md2html = mistune.Markdown(renderer=HighlightRenderer())
 
 
 def make_arguments_parser():
     """Build and return a command line agument parser."""
     parser = ArgumentParser(description=__doc__, epilog="""Microraptor:
-    Dont touch a single line of JavaScript code.
-    Write your Presentations using a simple MarkDown file.
+    Dont touch a single line of JavaScript code. Powered by Python & ImpressJS.
+    Write awesome 3D Presentations using a simple plain text MarkDown file.
     Convert a GitHub README.md to Presentations with one command. K.I.S.S.""")
     parser.add_argument('--version', action='version', version=__version__)
     parser.add_argument('markdown_file', metavar='markdown_file', type=str,
@@ -157,24 +145,22 @@ def main():
         with open(args.markdown_file, "w", encoding="utf-8") as markdowny:
             markdowny.write(MARKDOWN_EXAMPLE)
         log.info("Open and edit {0} to add content".format(args.markdown_file))
-    log.info("Reading Markdown file...")
+    log.info("Reading Markdown file: {0}.".format(args.markdown_file))
     splitter = args.splitter if args.splitter else SLIDE_SPLITTER
     with open(args.markdown_file, encoding="utf-8") as mrk:
         slides = [md2html(_) for _ in mrk.read().strip().split(splitter)]
-    log.info("Rendering HTML5 Presentation from Markdown and JSON files...")
+    log.info("Rendering HTML5 ImpressJS 3D Presentation from Markdown file...")
     template = TemplatePython(TEMPLATE)
     contents = template(globals(), presentation_slides=slides)
-    log.info("Writing HTML5 Presentation file...")
     html_presentation = args.markdown_file.replace(".md", "-presentation.html")
+    log.info("Writing HTML5 Presentation file: {0}.".format(html_presentation))
     with open(html_presentation, "w", encoding="utf-8") as presentation:
         presentation.write(contents)
-    log.info("HTML5 Presentation is ready: {0}".format(html_presentation))
     if args.after and getoutput:
         log.info(getoutput(str(args.after)))
     set_terminal_title()
     make_post_exec_msg(start_time)
-    if args.open:
-        open_new_tab(html_presentation)
+    open_new_tab(html_presentation) if args.open else log.info("Open slide:NO")
 
 
 if __name__ in "__main__":
