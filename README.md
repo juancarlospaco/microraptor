@@ -12,8 +12,8 @@
 # Example:
 
 - http://htmlpreview.github.io/?https://github.com/juancarlospaco/microraptor/blob/master/test-presentation.html
-- 3D HTML5 Presentations using a simple MarkDown file.
-- Convert a GitHub README.md to Presentations with 1 command.
+- 3D HTML5 Presentations using a MarkDown file.
+- GitHub README.md to Presentation with 1 command.
 
 -----
 
@@ -22,16 +22,16 @@
 
 **PIP:**
 ```bash
-pip3 install microraptor
+pip install microraptor
 ```
-- Use `sudo pip3 install microraptor` for installing System-wide.
-- Use `microraptor.py example.md --open` to run an example of all the functionalities.
+- Use `sudo pip install microraptor` for installing System-wide.
+- Use `microraptor.py example.md --open` to run an example.
 
 -----
 
 # Requisites:
 
-- [Python 3.x](https://www.python.org "Python Homepage")
+- [Python 3](https://www.python.org "Python Homepage")
 - [Angler](https://github.com/juancarlospaco/anglerfish)
 - [Pygments](http://pygments.org)
 - [Mistune](http://mistune.readthedocs.io)
@@ -40,7 +40,7 @@ pip3 install microraptor
 
 # Coding Style Guide:
 
-- Lint, [PEP-8](https://www.python.org/dev/peps/pep-0008), [PEP-257](https://www.python.org/dev/peps/pep-0257), [PyLama](https://github.com/klen/pylama#-pylama), [iSort](https://github.com/timothycrosley/isort) must Pass Ok. 
+- Lint, [PEP-8](https://www.python.org/dev/peps/pep-0008), [PEP-257](https://www.python.org/dev/peps/pep-0257), [PyLama](https://github.com/klen/pylama#-pylama), [iSort](https://github.com/timothycrosley/isort) should Pass Ok. 
 - `pip install pep8 pep257 pylama isort`
 
 -----
