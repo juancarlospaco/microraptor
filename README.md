@@ -11,8 +11,8 @@
 
 # Examples:
 
-- http://htmlpreview.github.io/?https://github.com/juancarlospaco/microraptor/blob/master/test-presentation.html
-- http://htmlpreview.github.io/?https://github.com/juancarlospaco/microraptor/blob/master/README-presentation.html
+- [Test Presentation](http://htmlpreview.github.io/?https://github.com/juancarlospaco/microraptor/blob/master/test-presentation.html)
+- [This README.md](http://htmlpreview.github.io/?https://github.com/juancarlospaco/microraptor/blob/master/README-presentation.html)
 - 3D HTML5 Presentations using a MarkDown file.
 - GitHub README.md to Presentation with 1 command.
 
@@ -49,13 +49,13 @@ pip install microraptor
 # Contributors:
 
 - **Please Star this Repo on Github !**, it helps to show up faster on searchs.
-- [Help](https://help.github.com/articles/using-pull-requests) and more [Help](https://help.github.com/articles/fork-a-repo) and Interactive Quick [Git Tutorial](https://try.github.io).
+- [Help](https://help.github.com/articles/using-pull-requests) and more [Help](https://help.github.com/articles/fork-a-repo) and [Git Tutorial](https://try.github.io).
 
 -----
 
 # Licence:
 
-- GNU GPL Latest Version *AND* GNU LGPL Latest Version.
+- GNU GPL *AND* GNU LGPL Latest Versions.
 
 # Ethics and Humanism Policy:
 
@@ -63,4 +63,4 @@ pip install microraptor
 
 -----
 
-# Thanks &hearts;
+<h1>Thanks &hearts;</h1>
