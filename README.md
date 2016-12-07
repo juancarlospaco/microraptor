@@ -22,11 +22,12 @@
 # Install permanently on the system:
 
 **PIP:** *(Recommended!)*
-```
+```bash
 pip3 install microraptor
 ```
 - Use `sudo pip3 install microraptor` for installing System-wide.
-- Use `microraptor.py example.md --open` to run an example of all the functionalities, and create a presentation markdown base template.
+- Use `microraptor.py example.md --open` to run an example of all the functionalities.
+- It will create the file with a presentation markdown base template if you dont have one.
 
 -----
 
