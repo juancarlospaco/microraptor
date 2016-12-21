@@ -22,7 +22,7 @@
 for index, content in enumerate(presentation_slides):
     {{ """
     <!-- Begins presentation slide number: {number} -->
-    <div id={number} class=step data-rel-x="{rx}" data-rel-y="{ry}" data-rotate="{rota}" data-rotate-x="{dx}" data-rotate-y="{dy}" data-x="{x}" data-y="{y}" data-z="{z}" data-scale="{s}">
+    <div id={number} class="step {efekt}" data-rel-x="{rx}" data-rel-y="{ry}" data-rotate="{rota}" data-rotate-x="{dx}" data-rotate-y="{dy}" data-x="{x}" data-y="{y}" data-z="{z}" data-scale="{s}">
     {content}
     </div>
     <!-- Ends presentation slide number: {number} -->
@@ -31,31 +31,50 @@ for index, content in enumerate(presentation_slides):
         dx=randint(1, 5), dy=randint(1, 5),
         rx=randint(1000, 5000), ry=randint(5000, 9000), rota=randint(-720, 720),
         x=randint(1000, 5000), y=randint(5000, 9000),
-        z=randint(1, 5), s=randint(1, 9)) }}
+        z=randint(1, 5), s=randint(1, 9),
+        efekt=choice(("saturate", "grayscale", "contrast", "brightness", "invert", "sepia", "huerotate", ""))) }}
 
 {{ """
+<!-- Begins presentation slide overview -->
 <div id=overview class=step data-x={x} data-y={y} data-scale={s} style='pointer-events:none' data-rotate={rota} ></div>
+<!-- Ends presentation slide overview -->
 """.format(x=randint(1000, 5000), y=randint(1000, 5000),
            s=randint(2, 9), rota=randint(-720, 720)) }}
 
 %}
 </div>
 
-<!-- <div class=hint ><p>Use Spacebar or Arrow keys to navigate.</p></div> -->
 <div id="impress-toolbar"></div>
 <div id="impress-help"></div>
 
 
 <style>
-@import url(https://fonts.googleapis.com/css?family=Ubuntu);
-@import url(https://fonts.googleapis.com/css?family=Oxygen);
+{%
+
+if not args.nofont:
+  font_for_title = get_random_display_font()
+  font_for_codes = get_random_mono_font()
+  font_for_texts = get_random_sans_font()
+  font_for_other = get_random_serif_font()
+  font_for_quote = get_random_handwriting_font()
+
+  for font_name in (font_for_title, font_for_codes, font_for_texts, font_for_quote, font_for_other):
+    {{ "@import url(https://fonts.googleapis.com/css?family='{font_name}');\n".format(font_name=font_name) }}
+
+  {{ "body, .step {font-family: %s};\n" % font_for_texts }}
+  {{ "table, tbody, del {font-family: %s};\n" % font_for_other }}
+  {{ "h1, h2, h3 {font-family: %s};\n" % font_for_title }}
+  {{ ".code, code, pre {font-family: %s};\n" % font_for_codes }}
+  {{ ".blockquote, blockquote, quote {font-family: %s};\n" % font_for_quote }}
+
+%}
 
 .fallback-message {
     font-family: sans-serif;
     line-height: 1.3;
     width: 780px;
     padding: 9px 9px 0;
-    margin: 20px auto;
+    margin: 9px auto;
     border: 1px solid red;
     border-radius: 9px;
     background: orange
@@ -75,7 +94,6 @@ p {margin: .7em}
 li {margin: .2em}
 
 .code, code {
-    font-family: "Ubuntu mono","Oxygen mono", monospace;
     background-color: white;
     text-shadow: none;
     border-radius: 0
@@ -85,12 +103,11 @@ strike {opacity: .7}
 
 /* Presentation */
 body {
-    font-family: Ubuntu, Oxygen, sans-serif;
     background: #fff;
     background:
-            linear-gradient( {% {{ get_random_pastelight_color() }} %}, transparent),
-            linear-gradient(90deg, {% {{ get_random_pastelight_color() }} %}, transparent),
-            linear-gradient(-90deg, {% {{ get_random_pastelight_color() }} %}, transparent);
+            linear-gradient( {% {{ get_random_pastelight_color() if not args.nocolor else 'transparent' }} %}, transparent),
+            linear-gradient(90deg, {% {{ get_random_pastelight_color() if not args.nocolor else 'transparent' }} %}, transparent),
+            linear-gradient(-90deg, {% {{ get_random_pastelight_color() if not args.nocolor else 'transparent' }} %}, transparent);
     background-blend-mode: screen
 }
 
@@ -101,20 +118,26 @@ body {
     padding: 40px 60px;
     margin: 20px auto;
     box-sizing:         border-box;
-    color: {% {{ get_random_pasteldark_color() }} %};
-    text-shadow: 0 1px 2px {% {{ get_random_pasteldark_color() }} %};
-    font-family: Ubuntu, Oxygen, sans-serif;
+    color: {% {{ get_random_pasteldark_color() if not args.nocolor else 'black' }} %};
+    text-shadow: 0 1px 2px {% {{ get_random_pasteldark_color() if not args.nocolor else 'transparent' }} %};
     font-size: 30px;
     line-height: 1.5
 }
 
+/* Simple effects for non-active slides (blur kills performance so is out) */
+.saturate   { filter: saturate(3)        }
+.grayscale  { filter: grayscale(99%)     }
+.contrast   { filter: contrast(99%)      }
+.brightness { filter: brightness(9)      }
+.invert     { filter: invert(99%)        }
+.sepia      { filter: sepia(99%)         }
+.huerotate  { filter: hue-rotate(180deg) }
+
 /* Make inactive steps a little bit transparent */
 .impress-enabled .step {
     margin: 0;
-    opacity: .1;
-    -webkit-filter: blur(3px);
-    filter: blur(3px);
-    transition: opacity 1s
+    opacity: .05;
+    transition: all 1s
 }
 .impress-enabled .step.active {opacity: 1; filter: none}
 
