@@ -110,9 +110,9 @@ setup(
     include_package_data=True,
     zip_safe=True,
 
-    install_requires=['anglerfish'],
-    setup_requires=['anglerfish'],
-    tests_require=['anglerfish'],
+    install_requires=['anglerfish', 'mistune', 'pygments'],
+    setup_requires=['anglerfish', 'mistune', 'pygments'],
+    tests_require=['anglerfish', 'mistune', 'pygments'],
     requires=['anglerfish', 'mistune', 'pygments'],
 
     scripts=["microraptor.py"],
