@@ -132,7 +132,7 @@ def make_arguments_parser():
                         help="Dont automatically style presentation Fonts.")
     parser.add_argument('--nocolor', action='store_true',
                         help="Dont automatically style presentation Colors.")
-    parser.add_argument('--notes', action='store_true',
+    parser.add_argument('--notes', type=str,
                         help="Presentation Notes TXT file path (Experimental)")
     parser.add_argument('--beep', action='store_true',
                         help="Beep sound will be played when it ends at exit.")
