@@ -76,6 +76,7 @@ if args.notes:
 
     <b>Tip:</b><br>
     <input type=text title="Install Microraptor to recompile presentation" value="pip install microraptor" onclick="this.focus();this.select()" readonly ><br>
+    <a href="https://github.com/juancarlospaco/microraptor" rel="noopener noreferrer nofollow" title="Microraptor Homepage Website" target=_blank >Microraptor Website</a><br>
 </details>
 <!-- Ends presentation slide notes -->
 """.format(source=MARKDOWN.strip(),
@@ -164,15 +165,16 @@ body {
 
 .step {
     position: relative;
-    width: 900px;
-    height: 700px;
-    padding: 9px 60px;
+    width: 1024px;
+    height: auto;
+    min-width: 1024px;
+    min-height: 768px;
+    padding: 9px 9px;
     margin: 9px auto;
     color: {%  {{ get_random_pasteldark_color() if not args.nocolor else 'transparent' }} %};
     text-shadow: 0 1px 2px {%  {{ get_random_pasteldark_color() if not args.nocolor else 'transparent' }} %};
     box-sizing: border-box;
-    font-size: 30px;
-    line-height: 1.25
+    font-size: 30px
 }
 
 /* Simple effects for non-active slides (blur kills performance so is out) */
@@ -257,7 +259,6 @@ if args.js:
 </script>
 
 
-<!-- Call "impress().init()" at the end of document. -->
 <script>{% {{ IMPRESS }} %}</script>
 <script>impress().init()</script>
 
