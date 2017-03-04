@@ -18,6 +18,14 @@
 
 -----
 
+# Screenshots:
+
+[Microraptor on Linux](https://raw.githubusercontent.com/juancarlospaco/microraptor/master/microraptor-linux.jpg "Microraptor on Linux")
+
+
+[Microraptor on Windows](https://raw.githubusercontent.com/juancarlospaco/microraptor/master/microraptor-windows.jpg "Microraptor on Windows")
+
+-----
 
 # Install permanently on the system:
 
