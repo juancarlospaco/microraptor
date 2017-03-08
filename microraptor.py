@@ -9,12 +9,12 @@ import atexit
 import os
 
 from argparse import ArgumentParser
+from base64 import urlsafe_b64encode
 from datetime import datetime
 from getpass import getuser
 from random import choice, randint
 from subprocess import getoutput
 from webbrowser import open_new_tab
-from base64 import urlsafe_b64encode
 
 import mistune
 
@@ -23,15 +23,16 @@ from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 
 from anglerfish import (TemplatePython, beep, check_encoding, check_folder,
-                        get_random_display_font, get_random_handwriting_font,
-                        get_random_mono_font, get_random_pasteldark_color,
+                        get_clipboard, get_random_display_font,
+                        get_random_handwriting_font, get_random_mono_font,
+                        get_random_pasteldark_color,
                         get_random_pastelight_color, get_random_sans_font,
                         get_random_serif_font, json_pretty, make_logger,
                         make_post_exec_msg, set_process_name,
                         set_terminal_title, stealth2string)
 
 
-__version__ = '1.9.5'
+__version__ = '2.0.0'
 __license__ = 'GPLv3+ LGPLv3+'
 __author__ = 'Juan Carlos'
 __email__ = 'juancarlospaco@gmail.com'
@@ -134,6 +135,8 @@ def make_arguments_parser():
                         help="Dont automatically style presentation Colors.")
     parser.add_argument('--notes', type=str,
                         help="Presentation Notes TXT file path (Experimental)")
+    parser.add_argument('--toclipboard', action='store_true',
+                        help="Copy presentation to clipboard (Experimental)")
     parser.add_argument('--beep', action='store_true',
                         help="Beep sound will be played when it ends at exit.")
     return parser.parse_args()
@@ -169,6 +172,8 @@ def main():
     log.info("Writing HTML5 Presentation file: {0}.".format(html_presentation))
     with open(html_presentation, "w", encoding="utf-8") as presentation:
         presentation.write(contents)
+    if args.toclipboard:
+        get_clipboard().copy(contents)
     if args.after and getoutput:
         log.info(getoutput(str(args.after)))
     set_terminal_title()
