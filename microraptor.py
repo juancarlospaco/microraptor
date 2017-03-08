@@ -120,25 +120,25 @@ def make_arguments_parser():
                         help="Full path to Custom CSS file for presentation.")
     parser.add_argument('--js', type=str,
                         help="Full path to Custom JS file for presentation.")
+    parser.add_argument('--notes', type=str,
+                        help="Full path to Presentation Notes plain TXT file.")
     parser.add_argument('--splitter', type=str,
                         help="Markdown pattern text to use as slides splitter")
-    parser.add_argument('--quiet', action='store_true', help="Quiet, Silent.")
-    parser.add_argument('--after', type=str,
-                        help="Command to execute after run (Experimental).")
     parser.add_argument('--open', action='store_true',
                         help="Open the Presentation on a web browser tab.")
-    parser.add_argument('--mini', action='store_true',
-                        help="Minify HTML of the Presentation (Experimental).")
+    parser.add_argument('--quiet', action='store_true', help="Quiet, Silent.")
     parser.add_argument('--nofont', action='store_true',
                         help="Dont automatically style presentation Fonts.")
     parser.add_argument('--nocolor', action='store_true',
                         help="Dont automatically style presentation Colors.")
-    parser.add_argument('--notes', type=str,
-                        help="Full path to Presentation Notes plain TXT file.")
-    parser.add_argument('--toclipboard', action='store_true',
-                        help="Copy presentation to clipboard (Experimental)")
     parser.add_argument('--beep', action='store_true',
                         help="Beep sound will be played when it ends at exit.")
+    parser.add_argument('--after', type=str,
+                        help="Command to execute after run (Experimental).")
+    parser.add_argument('--mini', action='store_true',
+                        help="Minify HTML of the Presentation (Experimental).")
+    parser.add_argument('--toclipboard', action='store_true',
+                        help="Copy presentation to clipboard (Experimental)")
     return parser.parse_args()
 
 
