@@ -134,7 +134,7 @@ def make_arguments_parser():
     parser.add_argument('--nocolor', action='store_true',
                         help="Dont automatically style presentation Colors.")
     parser.add_argument('--notes', type=str,
-                        help="Presentation Notes TXT file path (Experimental)")
+                        help="Full path to Presentation Notes plain TXT file.")
     parser.add_argument('--toclipboard', action='store_true',
                         help="Copy presentation to clipboard (Experimental)")
     parser.add_argument('--beep', action='store_true',
