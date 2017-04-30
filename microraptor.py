@@ -36,7 +36,7 @@ __version__ = '2.0.0'
 __license__ = 'GPLv3+ LGPLv3+'
 __author__ = 'Juan Carlos'
 __email__ = 'juancarlospaco@gmail.com'
-__url__ = 'https://github.com/juancarlospaco/microraptor'
+__url__ = 'https://github.com/juancarlospaco/microraptor#microraptor'
 
 
 start_time = datetime.now()
@@ -56,11 +56,12 @@ MARKDOWN_EXAMPLE = """# Markdown
 # How?
 * [Angler](https://github.com/juancarlospaco/anglerfish) *(Python powah!)*
 * [Impress.js](http://impress.github.io/impress.js) *(Best frontend framework)*
+* 1 File, ~100 lines, Python 3.
 
 -----
 
 # Styles
-* *italics*, **bold**, ~~scratch~~, [links](http://example.com) and more!
+* *italics*, **bold**, ~~scratch~~, [links](http://example.com) and more! 🤘😺👍
 * 5 Dashes separate slides. Can still use HTML tags.
 * *Convert your GitHub `README.md` to Presentation!.*
 
@@ -78,6 +79,7 @@ Using [Pygments](http://pygments.org) for code blocks:
 // This javascript code should be highlighted.
 const test = () => {return console.log("Can I haz colors?")};
 ```
+🐍
 ```python
 # This Python code should be highlighted.
 import antigravity
@@ -85,12 +87,14 @@ import antigravity
 
 -----
 
-![](https://raw.githubusercontent.com/juancarlospaco/anglerfish/master/temp.jpg)
+##### Cat Tax!.
+![Cats](https://source.unsplash.com/800x600/?kitten,cat "More Kittens!")
 
 -----
 
 # Thanks!
-# &hearts;"""
+# &hearts;
+* https://github.com/juancarlospaco/microraptor"""
 
 
 class HighlightRenderer(mistune.Renderer):
@@ -110,8 +114,7 @@ md2html = mistune.Markdown(renderer=HighlightRenderer())
 def make_arguments_parser():
     """Build and return a command line agument parser."""
     parser = ArgumentParser(description=__doc__, epilog="""Microraptor:
-    Dont touch a single line of JavaScript code. Powered by Python & ImpressJS.
-    Write awesome 3D Presentations using a simple plain text MarkDown file.
+    Make awesome 3D Presentations using a simple plain text MarkDown file.
     Convert a GitHub README.md to Presentations with one command. K.I.S.S.""")
     parser.add_argument('--version', action='version', version=__version__)
     parser.add_argument('markdown_file', metavar='markdown_file', type=str,
@@ -148,7 +151,7 @@ def main():
     log = make_logger("microraptor", emoji=True)
     args = make_arguments_parser()
     log.disable(log.CRITICAL) if args.quiet else log.debug("Max Logging ON.")
-    log.info(__doc__ + __version__)
+    log.info(__doc__ + " " + __version__ + " " +  __license__)
     check_encoding()
     set_terminal_title("microraptor")
     set_process_name("microraptor")
@@ -159,7 +162,7 @@ def main():
         with open(args.markdown_file, "w", encoding="utf-8") as markdowny:
             markdowny.write(MARKDOWN_EXAMPLE)
         log.info("Open and edit {0} to add content".format(args.markdown_file))
-    log.info("Reading Markdown file: {0}.".format(args.markdown_file))
+    log.info("Reading Markdown *.MD file: {0}.".format(args.markdown_file))
     splitter = args.splitter if args.splitter else SLIDE_SPLITTER
     with open(args.markdown_file, encoding="utf-8") as mrk:
         global MARKDOWN
