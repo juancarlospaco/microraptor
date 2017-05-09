@@ -45,8 +45,7 @@ from zipapp import create_archive
 MODULE_PATH = os.path.join(os.path.dirname(__file__), "microraptor.py")
 DESCRIPTION = """Microraptor builds cool presentations using Angler, Impress
 and Markdown. Presentations using a simple MarkDown file.
-Convert a GitHub README.md to Presentations with one command.
-Dont touch a single line of JavaScript code."""
+Convert a GitHub README.md to Presentations with one command."""
 
 
 ##############################################################################
