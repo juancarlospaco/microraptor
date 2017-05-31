@@ -61,6 +61,13 @@ pip install microraptor
 
 -----
 
+# Web Version:
+
+- [Theres already good Open Source SAAS Hosted Web alternatives that use MarkDown.](https://cryptpad.fr/slide)
+- Microraptor is meant for super Quick and Easy use, even when Offline, we will not provide a Hosted version.
+
+-----
+
 # Licence:
 
 - GNU GPL *AND* GNU LGPL Latest Versions.
