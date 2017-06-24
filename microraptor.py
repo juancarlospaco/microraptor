@@ -104,7 +104,7 @@ class HighlightRenderer(mistune.Renderer):
     def block_code(self, cod, lang):
         """Process a code block of markdown."""
         if not lang:
-            return '\n<pre><code>{}</code></pre>\n'.format(mistune.escape(cod))
+            return f"\n<pre><code>\n{ mistune.escape(cod) }\n</code></pre>\n"
         formatr = HtmlFormatter(linenos=True, anchorlinenos=True)
         return highlight(cod, get_lexer_by_name(lang, stripall=True), formatr)
 
@@ -161,8 +161,8 @@ def main():
         log.warning("Markdown file not found,creating new one for you to edit")
         with open(args.markdown_file, "w", encoding="utf-8") as markdowny:
             markdowny.write(MARKDOWN_EXAMPLE)
-        log.info("Open and edit {0} to add content".format(args.markdown_file))
-    log.info("Reading Markdown *.MD file: {0}.".format(args.markdown_file))
+        log.info(f"Open and edit {args.markdown_file} to add Slides content!.")
+    log.info(f"Reading Markdown *.MD file: { args.markdown_file }.")
     splitter = args.splitter if args.splitter else SLIDE_SPLITTER
     with open(args.markdown_file, encoding="utf-8") as mrk:
         global MARKDOWN
@@ -172,7 +172,7 @@ def main():
     template = TemplatePython(TEMPLATE)
     contents = template(globals(), presentation_slides=slides, mini=args.mini)
     html_presentation = args.markdown_file.replace(".md", "-presentation.html")
-    log.info("Writing HTML5 Presentation file: {0}.".format(html_presentation))
+    log.info(f"Writing 1 new HTML5 Presentation file: {html_presentation}.")
     with open(html_presentation, "w", encoding="utf-8") as presentation:
         presentation.write(contents)
     if args.toclipboard:
