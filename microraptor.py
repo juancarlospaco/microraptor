@@ -14,6 +14,7 @@ from datetime import datetime
 from getpass import getuser
 from random import choice, randint
 from subprocess import getoutput
+from pathlib import Path
 from webbrowser import open_new_tab
 
 import mistune
@@ -155,33 +156,31 @@ def main():
     check_encoding()
     set_terminal_title("microraptor")
     set_process_name("microraptor")
-    check_folder(os.path.dirname(args.markdown_file))
+    markdown_file = Path(args.markdown_file)
+    html_slides = Path(args.markdown_file.replace(".md", "-presentation.html"))
+    check_folder(os.path.dirname(markdown_file))
     atexit.register(beep) if args.beep else log.debug("Beep sound at exit OFF")
-    if not os.path.isfile(args.markdown_file):
+    if not markdown_file.is_file():
         log.warning("Markdown file not found,creating new one for you to edit")
-        with open(args.markdown_file, "w", encoding="utf-8") as markdowny:
-            markdowny.write(MARKDOWN_EXAMPLE)
-        log.info(f"Open and edit {args.markdown_file} to add Slides content!.")
-    log.info(f"Reading Markdown *.MD file: { args.markdown_file }.")
+        markdown_file.write_text(MARKDOWN_EXAMPLE.strip(), encoding="utf-8")
+        log.info(f"Open and edit {markdown_file} to add your Slides content!.")
+    log.info(f"Reading Markdown *.MD file: { markdown_file }.")
     splitter = args.splitter if args.splitter else SLIDE_SPLITTER
-    with open(args.markdown_file, encoding="utf-8") as mrk:
-        global MARKDOWN
-        MARKDOWN = mrk.read().strip()
-        slides = [md2html(_) for _ in MARKDOWN.split(splitter)]
+    global MARKDOWN
+    MARKDOWN = markdown_file.read_text(encoding="utf-8").strip()
+    slides = [md2html(_) for _ in MARKDOWN.split(splitter)]
     log.info("Rendering HTML5 ImpressJS 3D Presentation from Markdown file...")
     template = TemplatePython(TEMPLATE)
     contents = template(globals(), presentation_slides=slides, mini=args.mini)
-    html_presentation = args.markdown_file.replace(".md", "-presentation.html")
-    log.info(f"Writing 1 new HTML5 Presentation file: {html_presentation}.")
-    with open(html_presentation, "w", encoding="utf-8") as presentation:
-        presentation.write(contents)
+    log.info(f"Writing 1 new HTML5 Presentation file: {html_slides}.")
+    html_slides.write_text(contents, encoding="utf-8")
     if args.toclipboard:
         get_clipboard().copy(contents)
     if args.after and getoutput:
         log.info(getoutput(str(args.after)))
     set_terminal_title()
     make_post_exec_msg(start_time)
-    open_new_tab(html_presentation) if args.open else log.info("Open slide:NO")
+    open_new_tab(html_slides.as_uri()) if args.open else log.info("Skip Open.")
 
 
 if __name__ in "__main__":
