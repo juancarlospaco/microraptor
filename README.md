@@ -40,7 +40,7 @@ pip install microraptor
 
 # Requisites:
 
-- [Python 3](https://www.python.org "Python Homepage")
+- [Python 3.6+](https://www.python.org "Python Homepage")
 - [Angler](https://github.com/juancarlospaco/anglerfish)
 - [Pygments](http://pygments.org)
 - [Mistune](http://mistune.readthedocs.io)
