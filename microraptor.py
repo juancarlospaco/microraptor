@@ -33,7 +33,7 @@ from anglerfish import (TemplatePython, beep, check_encoding, check_folder,
                         set_terminal_title, stealth2string)
 
 
-__version__ = '2.0.0'
+__version__ = '2.2.2'
 __license__ = 'GPLv3+ LGPLv3+'
 __author__ = 'Juan Carlos'
 __email__ = 'juancarlospaco@gmail.com'
